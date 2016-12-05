@@ -74,8 +74,10 @@
   <ItemGroup>
     <ClInclude Include="Arc.h" />
     <ClInclude Include="dbl.h" />
+    <ClInclude Include="DxfWriter.h" />
     <ClInclude Include="g2d_enum.h" />
     <ClInclude Include="g2d_exports.h" />
+    <ClInclude Include="g2d_math.h" />
     <ClInclude Include="g2d_precision.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Line.h" />
@@ -86,6 +88,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arc.cpp" />
+    <ClCompile Include="DxfWriter.cpp" />
+    <ClCompile Include="g2d_math.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Oriented.cpp" />
     <ClCompile Include="Path.cpp" />

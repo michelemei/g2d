@@ -2,42 +2,13 @@
 #include "Arc.h"
 #include "dbl.h"
 #include <assert.h>
+#include "g2d_math.h"
 
 #define _USE_MATH_DEFINES
 #include <math.h>
 
 using namespace std;
 using namespace osl::g2d;
-
-/* minimal math */
-double __get_phi(double x, double y)
-{
-	if (dbl_greater(x, 0.0))
-	{
-		return dbl_greater_or_equal(y, 0.0) ? atan2(y, x) : atan2(y, x) + 2 * M_PI;
-	}
-	if (dbl_less(x, 0.0))
-	{
-		return M_PI - atan2(y, abs(x));
-	}
-	return dbl_greater_or_equal(y, 0.0) ? M_PI_2 : 3 * M_PI_2;
-}
-
-double __normalize_angle(double angle)
-{
-	angle = fmod(angle, M_PI * 2);
-	if (angle < 0.0)
-		angle += M_PI * 2;
-	return angle;
-}
-
-double  __normalize_angle_sign(double angle, bool positive)
-{
-	angle = __normalize_angle(angle);
-	if (!positive)
-		angle -= 2 * M_PI;
-	return angle;
-}
 
 double get_angle_by_center_and_point(const Point& center, const Point& point)
 {
@@ -174,7 +145,7 @@ bool Arc::operator==(const Arc& other) const
 	       dbl_equal(subtended_angle, other.subtended_angle);
 }
 
-unique_ptr<Oriented> Arc::Clone() const
+unique_ptr<Item> Arc::Clone() const
 {
 	return unique_ptr<Arc>(new Arc(center, radius, start_angle, subtended_angle));
 }

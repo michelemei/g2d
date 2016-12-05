@@ -1,7 +1,5 @@
 #include "stdafx.h"
 #include "Line.h"
-#include <vector>
-#include "Path.h"
 
 using namespace std;
 using namespace osl::g2d;
@@ -10,7 +8,9 @@ Line::Line(const Point& start_point, const Point& end_point)
 	: Oriented(start_point), end_point(end_point)
 {
 	if (start_point == end_point)
+	{
 		throw exception("Line constructor: start point and end point are coincident. It's not a line, it's a point!");
+	}
 }
 
 Line::~Line() {}
@@ -25,7 +25,7 @@ const Point& Line::GetEndPoint() const
 	return end_point;
 }
 
-unique_ptr<Oriented> Line::Clone() const
+unique_ptr<Item> Line::Clone() const
 {
 	return unique_ptr<Line>(new Line(start_point, end_point));
 }

@@ -23,7 +23,6 @@ E-Mail: michele.mei@gmail.com
 #define __osl_g2d_arc_h
 
 #include "Oriented.h"
-#include <vector>
 
 namespace osl {
 namespace g2d {
@@ -98,10 +97,15 @@ public:
 	- radius (dbl tollerance)
 	- starting angle (dbl tollerance)
 	- subtended angle (dbl tollerance)
+	\param other The arc with which to make comparisons
+	\return True if the arcs are equals, otherwise False.
 	*/
-	bool operator==(const Arc&) const;
+	bool operator==(const Arc& other) const;
 
 	//! Gets the arc's center
+	/*!
+	\return The arc's center
+	*/
 	const Point& GetCenter() const;
 
 	//! Gets the arc's radius
@@ -113,12 +117,14 @@ public:
 	//! Gets the arc's subtended angle
 	double GetSubtendedAngle() const;
 
-	/* Item.h */
+	/* virtual from Item.h */
 	virtual ~Arc();
-	virtual std::unique_ptr<Oriented> Clone() const override;
-	virtual const Point& GetEndPoint() const override;
 	virtual void Move(double delta_x, double delta_y) override;
-	virtual void Move(const Point& delta) override;
+	virtual void Move(const Point& other) override;
+	
+	/* virtual from Oriented.h */
+	virtual std::unique_ptr<Item> Clone() const override;
+	virtual const Point& GetEndPoint() const override;
 	virtual void Reverse() override;
 };
 
