@@ -1,21 +1,19 @@
 #include "stdafx.h"
 #include "Shape.h"
 #include "Path.h"
-#include "Line.h"
-#include "Arc.h"
 
 using namespace std;
 using namespace osl::g2d;
 
 Shape::Shape(unique_ptr<Path> single)
 {
-	paths = make_unique<vector<unique_ptr<Path>>>();
+	paths = unique_ptr<vector<unique_ptr<Path>>>(new vector<unique_ptr<Path>>());
 	paths->push_back(move(single));
 }
 
 Shape::Shape(vector<unique_ptr<Path>>& _paths)
 {
-	paths = make_unique<vector<unique_ptr<Path>>>();
+	paths = unique_ptr<vector<unique_ptr<Path>>>(new vector<unique_ptr<Path>>());
 	for (auto p = _paths.begin(); p != _paths.end(); ++p)
 	{
 		paths->push_back(move(*p));

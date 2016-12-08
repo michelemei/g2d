@@ -45,7 +45,7 @@ Arc::Arc(const Point& start_point, const Point& end_point, const Point& center,
 			subtended_angle = -2 * M_PI;
 	}
 	assert(dbl_greater(abs(subtended_angle), 0.0) &&
-		dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
+	       dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
 }
 
 Arc::Arc(const Point& center, double radius, double start_angle, double end_angle, bool counter_clockwise)
@@ -72,7 +72,8 @@ Arc::Arc(const Point& center, double radius, double start_angle, double end_angl
 	{
 		subtended_angle = counter_clockwise ? 2 * M_PI : -2 * M_PI;
 	}
-	assert(dbl_greater(abs(subtended_angle), 0.0) && dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
+	assert(dbl_greater(abs(subtended_angle), 0.0) &&
+	       dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
 
 	end_point.X = center.X + cos(start_angle + subtended_angle) * radius;
 	end_point.Y = center.Y + sin(start_angle + subtended_angle) * radius;

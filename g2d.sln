@@ -3,6 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "g2d", "src\g2d\g2d.vcxproj", "{FE52E90F-B993-45BE-BE8B-00D95116F53A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "offset_vtest", "src\offset_vtest\offset_vtest.vcxproj", "{AB131B11-D6E6-4338-BADE-ABAF6B382C0D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{51BA0D57-AA23-416B-AA2B-3861B7D6D371} = {51BA0D57-AA23-416B-AA2B-3861B7D6D371}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "modules", "modules", "{5572F370-B792-4927-82A7-3F726F3AAB7B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "offset", "modules\offset\offset.vcxproj", "{51BA0D57-AA23-416B-AA2B-3861B7D6D371}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,8 +22,19 @@ Global
 		{FE52E90F-B993-45BE-BE8B-00D95116F53A}.Debug|Win32.Build.0 = Debug|Win32
 		{FE52E90F-B993-45BE-BE8B-00D95116F53A}.Release|Win32.ActiveCfg = Release|Win32
 		{FE52E90F-B993-45BE-BE8B-00D95116F53A}.Release|Win32.Build.0 = Release|Win32
+		{AB131B11-D6E6-4338-BADE-ABAF6B382C0D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AB131B11-D6E6-4338-BADE-ABAF6B382C0D}.Debug|Win32.Build.0 = Debug|Win32
+		{AB131B11-D6E6-4338-BADE-ABAF6B382C0D}.Release|Win32.ActiveCfg = Release|Win32
+		{AB131B11-D6E6-4338-BADE-ABAF6B382C0D}.Release|Win32.Build.0 = Release|Win32
+		{51BA0D57-AA23-416B-AA2B-3861B7D6D371}.Debug|Win32.ActiveCfg = Debug|Win32
+		{51BA0D57-AA23-416B-AA2B-3861B7D6D371}.Debug|Win32.Build.0 = Debug|Win32
+		{51BA0D57-AA23-416B-AA2B-3861B7D6D371}.Release|Win32.ActiveCfg = Release|Win32
+		{51BA0D57-AA23-416B-AA2B-3861B7D6D371}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{51BA0D57-AA23-416B-AA2B-3861B7D6D371} = {5572F370-B792-4927-82A7-3F726F3AAB7B}
 	EndGlobalSection
 EndGlobal
