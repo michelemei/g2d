@@ -50,16 +50,16 @@ class G2D_API Arc : public Oriented
 	Point end_point;
 
 public:
-	//! Arc's constructor by: start, center and end points.
 	/*!
+	\brief Arc's constructor by: start, center and end points
 	\param start_point Arc's start point
 	\param end_point Arc's end point
 	\param center Arc's center
 	\param counter_clockwise Circulare motion: true for counterclockwise (CCW),
-	                         false for clockwise (CW)
+	false for clockwise (CW)
 	*/
 	Arc(const Point& start_point, const Point& end_point, const Point& center,
-	    bool counter_clockwise);
+		bool counter_clockwise);
 
 	/*!
 	\param center Arc's center
@@ -67,65 +67,73 @@ public:
 	\param start_angle Arc's start angle (positive)
 	\param end_angle Arc's end angle (positive)
 	\param counter_clockwise Circular motion: true for counterclockwise (CCW),
-	                         false for clockwise (CW)
+	false for clockwise (CW)
 	*/
 	Arc(const Point& center, double radius, double start_angle,
-	    double end_angle, bool counter_clockwise);
+		double end_angle, bool counter_clockwise);
 
-	//! Arc's constructor by: center, radius, start angle and subtended angle.
 	/*!
+	\brief Arc's constructor by: center, radius, start angle and subtended angle
 	\param center Arc's center
 	\param radius Arc's radius
 	\param start_angle Arc's start angle (positive)
 	\param subtended_angle Arc's subtended angle
 	*/
 	Arc(const Point& center, double radius, double start_angle,
-	    double subtended_angle);
+		double subtended_angle);
 
-	//! Arc's constructor by: start, center and subtended angle
 	/*!
+	\brief Arc's constructor by: start, center and subtended angle
 	\param start_point Arc's start point
 	\param center Arc's center point
 	\param subtended_angle Arc's subtended angle
 	*/
 	Arc(const Point& start_point, const Point& center, double subtended_angle);
 
-	//! Equals operator
 	/*!
-	Two arcs are equals when they have the same:
+	\brief Equals operator. Two arcs are equals when they have the same:
 	- center (\ref Point::operator==)
 	- radius (dbl tollerance)
 	- starting angle (dbl tollerance)
 	- subtended angle (dbl tollerance)
-	\param other The arc with which to make comparisons
-	\return True if the arcs are equals, otherwise False.
+	\param other The arc with which to make comparison
+	\return True if the arcs are equals, otherwise false
 	*/
 	bool operator==(const Arc& other) const;
 
-	//! Gets the arc's center
 	/*!
+	\brief Get the arc's center
 	\return The arc's center
 	*/
 	const Point& GetCenter() const;
 
-	//! Gets the arc's radius
+	/*!
+	\brief Get the arc's radius
+	\return The arc's radius
+	*/
 	double GetRadius() const;
 
-	//! Gets the arc's starting angle
+	/*!
+	\brief Get the arc's starting angle
+	\return The arc's starting angle
+	*/
 	double GetStartAngle() const;
 
-	//! Gets the arc's subtended angle
+	/*!
+	\brief Get the arc's subtended angle
+	\return The arc's subtended angle
+	*/
 	double GetSubtendedAngle() const;
 
-	/* virtual from Item.h */
+	/* virtuals from Item.h */
 	virtual ~Arc();
-	virtual void Move(double delta_x, double delta_y) override;
-	virtual void Move(const Point& other) override;
-	
-	/* virtual from Oriented.h */
-	virtual std::unique_ptr<Item> Clone() const override;
-	virtual const Point& GetEndPoint() const override;
-	virtual void Reverse() override;
+	void Move(double delta_x, double delta_y) override;
+	void Move(const Point& other) override;
+
+	/* virtuals from Oriented.h */
+	std::unique_ptr<Item> Clone() const override;
+	const Point& GetEndPoint() const override;
+	void Reverse() override;
 };
 
 }

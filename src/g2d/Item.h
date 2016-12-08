@@ -15,8 +15,8 @@ GNU General Public License for more details.
 You can get a copy of of the GNU General Public License
 at<http://www.gnu.org/licenses/>.
 
-Author: Michele Mei
-E-Mail: michele.mei@gmail.com
+Author:  Michele Mei
+E-Mail:  michele.mei@gmail.com
 
 *******************************************************************************/
 #ifndef __osl_g2d_item_h
@@ -39,7 +39,6 @@ public:
 
 	//! Clone the item
 	/*!
-	\todo Move the Clone into Item interface.
 	\return A clone of item
 	*/
 	virtual std::unique_ptr<Item> Clone() const = 0;

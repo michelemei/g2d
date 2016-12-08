@@ -5,7 +5,7 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
-double __get_phi(double x, double y)
+double get_phi(double x, double y)
 {
 	if (dbl_greater(x, 0.0))
 	{
@@ -18,7 +18,7 @@ double __get_phi(double x, double y)
 	return dbl_greater_or_equal(y, 0.0) ? M_PI_2 : 3 * M_PI_2;
 }
 
-double __normalize_angle(double angle)
+double normalize_angle(double angle)
 {
 	angle = fmod(angle, M_PI * 2);
 	if (angle < 0.0)
@@ -26,9 +26,9 @@ double __normalize_angle(double angle)
 	return angle;
 }
 
-double  __normalize_angle_sign(double angle, bool positive)
+double normalize_angle_sign(double angle, bool positive)
 {
-	angle = __normalize_angle(angle);
+	angle = normalize_angle(angle);
 	if (!positive)
 		angle -= 2 * M_PI;
 	return angle;

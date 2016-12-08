@@ -12,12 +12,12 @@ using namespace osl::g2d;
 
 double get_angle_by_center_and_point(const Point& center, const Point& point)
 {
-	return __get_phi(point.X - center.X, point.Y - center.Y);
+	return get_phi(point.X - center.X, point.Y - center.Y);
 }
 
-Arc::Arc(const Point& start_point, const Point& end_point, const Point& center, bool counter_clockwise)
-	: Oriented(start_point),
-	center(center), radius(center.Distance(start_point)), end_point(end_point)
+Arc::Arc(const Point& start_point, const Point& end_point, const Point& center,
+	bool counter_clockwise) : Oriented(start_point), center(center),
+	radius(center.Distance(start_point)), end_point(end_point)
 {
 	if (dbl_less_or_equal(radius, 0.0))
 	{
@@ -30,9 +30,13 @@ Arc::Arc(const Point& start_point, const Point& end_point, const Point& center, 
 	}
 
 	start_angle = get_angle_by_center_and_point(center, start_point);
-	assert(dbl_greater_or_equal(start_angle, 0.0) && dbl_less(start_angle, 2 * M_PI));
+	assert(dbl_greater_or_equal(start_angle, 0.0) &&
+		   dbl_less(start_angle, 2 * M_PI));
 
-	subtended_angle = __normalize_angle_sign(get_angle_by_center_and_point(center, end_point) - start_angle, counter_clockwise);
+	subtended_angle = normalize_angle_sign(
+		get_angle_by_center_and_point(center, end_point) - start_angle,
+		counter_clockwise);
+
 	if (dbl_is_zero(subtended_angle))
 	{
 		if (counter_clockwise)
@@ -40,7 +44,8 @@ Arc::Arc(const Point& start_point, const Point& end_point, const Point& center, 
 		else
 			subtended_angle = -2 * M_PI;
 	}
-	assert(dbl_greater(abs(subtended_angle), 0.0) && dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
+	assert(dbl_greater(abs(subtended_angle), 0.0) &&
+		dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
 }
 
 Arc::Arc(const Point& center, double radius, double start_angle, double end_angle, bool counter_clockwise)
@@ -62,13 +67,10 @@ Arc::Arc(const Point& center, double radius, double start_angle, double end_angl
 		throw exception("start angle can not be greater or equals than zero");
 	}
 
-	subtended_angle = __normalize_angle_sign(end_angle - start_angle, counter_clockwise);
+	subtended_angle = normalize_angle_sign(end_angle - start_angle, counter_clockwise);
 	if (dbl_is_zero(subtended_angle))
 	{
-		if (counter_clockwise)
-			subtended_angle = 2 * M_PI;
-		else
-			subtended_angle = -2 * M_PI;
+		subtended_angle = counter_clockwise ? 2 * M_PI : -2 * M_PI;
 	}
 	assert(dbl_greater(abs(subtended_angle), 0.0) && dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
 
@@ -140,9 +142,9 @@ Arc::~Arc() {}
 bool Arc::operator==(const Arc& other) const
 {
 	return center == other.center &&
-	       dbl_equal(radius, other.radius) &&
-	       dbl_equal(start_angle, other.start_angle) &&
-	       dbl_equal(subtended_angle, other.subtended_angle);
+		   dbl_equal(radius, other.radius) &&
+		   dbl_equal(start_angle, other.start_angle) &&
+		   dbl_equal(subtended_angle, other.subtended_angle);
 }
 
 unique_ptr<Item> Arc::Clone() const
@@ -199,7 +201,7 @@ void Arc::Reverse()
 
 #ifdef _DEBUG
 	bool previous_ccw = subtended_angle > 0;
-	double new_subtended_angle = __normalize_angle_sign(get_angle_by_center_and_point(center, end_point) - start_angle, !previous_ccw);
+	double new_subtended_angle = normalize_angle_sign(get_angle_by_center_and_point(center, end_point) - start_angle, !previous_ccw);
 	if (dbl_is_zero(new_subtended_angle))
 	{
 		if (!previous_ccw)

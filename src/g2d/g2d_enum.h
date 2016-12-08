@@ -4,12 +4,6 @@
 namespace osl {
 namespace g2d {
 
-enum OffsetExtremeType
-{
-	betNone,
-	betRound
-};
-
 /*! Item's tag of close offset */
 enum OffsetTag
 {

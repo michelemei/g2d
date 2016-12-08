@@ -94,13 +94,13 @@ public:
 
 	/* from Item.h */
 	virtual ~Path();
-	virtual std::unique_ptr<Item> Clone() const override;
-	virtual void Move(double delta_x, double delta_y) override;
-	virtual void Move(const Point& delta) override;
+	std::unique_ptr<Item> Clone() const override;
+	void Move(double delta_x, double delta_y) override;
+	void Move(const Point& delta) override;
 
 	/* from Oriented.h */
-	virtual const Point& GetEndPoint() const override;
-	virtual void Reverse() override;
+	const Point& GetEndPoint() const override;
+	void Reverse() override;
 };
 
 }

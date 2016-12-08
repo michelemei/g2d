@@ -210,7 +210,7 @@ void DxfWriter::write_arc(wofstream& dxf, const wstring& layer, int color,
                           const g2d::Arc& arc) const
 {
 	double start_angle = arc.GetStartAngle();
-	double end_angle = __normalize_angle(arc.GetStartAngle() +
+	double end_angle = normalize_angle(arc.GetStartAngle() +
 	                                  arc.GetSubtendedAngle());
 	if (arc.GetSubtendedAngle() < 0)
 	{
