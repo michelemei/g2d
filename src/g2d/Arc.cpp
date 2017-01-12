@@ -31,19 +31,32 @@ Arc::Arc(const Point& start_point, const Point& end_point, const Point& center,
 
 	start_angle = get_angle_by_center_and_point(center, start_point);
 	assert(dbl_greater_or_equal(start_angle, 0.0) &&
-		   dbl_less(start_angle, 2 * M_PI));
+	       dbl_less(start_angle, 2 * M_PI));
 
-	subtended_angle = normalize_angle_sign(
-		get_angle_by_center_and_point(center, end_point) - start_angle,
-		counter_clockwise);
+	double end_angle = get_angle_by_center_and_point(center, end_point);
+	assert(dbl_greater_or_equal(end_angle, 0.0) &&
+	       dbl_less(end_angle, 2 * M_PI));
 
-	if (dbl_is_zero(subtended_angle))
+	if (dbl_equal(start_angle, end_angle))
 	{
-		if (counter_clockwise)
-			subtended_angle = 2 * M_PI;
+		if (start_point == end_point)
+		{
+			if (counter_clockwise)
+				subtended_angle = 2 * M_PI;
+			else
+				subtended_angle = -2 * M_PI;
+		}
 		else
-			subtended_angle = -2 * M_PI;
+		{
+			throw exception("subtended angle is under precision");
+		}
 	}
+	else
+	{
+		subtended_angle = normalize_angle_sign(end_angle - start_angle,
+		                                       counter_clockwise);
+	}
+
 	assert(dbl_greater(abs(subtended_angle), 0.0) &&
 	       dbl_less_or_equal(abs(subtended_angle), 2 * M_PI));
 }
@@ -140,12 +153,16 @@ Arc::Arc(const Point& start_point, const Point& center, double subtended_angle)
 
 Arc::~Arc() {}
 
-bool Arc::operator==(const Arc& other) const
+bool Arc::operator==(const Item& other) const
 {
-	return center == other.center &&
-		   dbl_equal(radius, other.radius) &&
-		   dbl_equal(start_angle, other.start_angle) &&
-		   dbl_equal(subtended_angle, other.subtended_angle);
+	const Arc* other_arc = dynamic_cast<const Arc*>(&other);
+	if (other_arc == nullptr)
+		return false;
+
+	return center == other_arc->center &&
+		dbl_equal(radius, other_arc->radius) &&
+		dbl_equal(start_angle, other_arc->start_angle) &&
+		dbl_equal(subtended_angle, other_arc->subtended_angle);
 }
 
 unique_ptr<Item> Arc::Clone() const
@@ -176,6 +193,20 @@ double Arc::GetSubtendedAngle() const
 const Point& Arc::GetEndPoint() const
 {
 	return end_point;
+}
+
+vector<Point> Arc::Discretize(double chordal_tollerance) const
+{
+	vector<Point> points;
+	int steps = static_cast<int>(ceil(abs(subtended_angle) / (acos(1 - chordal_tollerance / radius) * 2)));
+	for (int i = 0; i < steps; ++i)
+	{
+		Point current(start_point);
+		current.Rotate(center, double(i) / double(steps) * subtended_angle);
+		points.push_back(current);
+	}
+	points.push_back(end_point);
+	return points;
 }
 
 void Arc::Move(double delta_x, double delta_y)

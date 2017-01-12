@@ -43,34 +43,36 @@ public:
 
 	//! Base constructor
 	/*!
-	\param x X coordinate
-	\param y Y coordinate
+	\param[in] x X coordinate
+	\param[in] y Y coordinate
 	*/
 	explicit Point(double x = 0.0, double y = 0.0);
 
 	//! Copy constructor
 	/*!
-	\param copy Source point for the copy
+	\param[in] copy Source point for the copy
 	*/
 	Point(const Point& copy);
 
 	//! Assignment operator
 	/*!
-	\param other Point for which take values
+	\param[in] other Point for which take values
 	*/
-	const Point& operator=(const Point& other);
+	Point& operator=(const Point& other);
 
-	//! Equals operator
+	//! Equal operator
 	/*!
-	Two points are equals when the distance is less than dbl_tollerance
+	\brief Two points are equals when the distance is less than dbl_tollerance
+	\param[in] other The other point to make the comparison
 	*/
-	bool operator==(const Point&) const;
+	bool operator==(const Point& other) const;
 
-	//! Not equals operator
+	//! Inequality operator
 	/*!
-	The not of equals operator
+	\brief Inequality operator (not of equal operator)
+	\param[in] other The other point to make the comparison
 	*/
-	bool operator!=(const Point&) const;
+	bool operator!=(const Point& other) const;
 
 	//! Addition operator between points
 	Point operator+(const Point&) const;
@@ -94,6 +96,8 @@ public:
 
 	Point operator*(double) const;
 	Point& operator*=(double);
+
+	void Rotate(const Point& center, double radians);
 
 	//! Distance from another \ref Point
 	double Distance(const Point& other) const;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Line.h"
+#include "dbl.h"
 
 using namespace std;
 using namespace osl::g2d;
@@ -15,9 +16,14 @@ Line::Line(const Point& start_point, const Point& end_point)
 
 Line::~Line() {}
 
-bool Line::operator==(const Line& other) const
+bool Line::operator==(const Item& other) const
 {
-	return start_point == other.start_point && end_point == other.end_point;
+	const Line* other_line = dynamic_cast<const Line*>(&other);
+	if (other_line == nullptr)
+		return false;
+
+	return start_point == other_line->start_point &&
+		end_point == other_line->end_point;
 }
 
 const Point& Line::GetEndPoint() const

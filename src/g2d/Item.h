@@ -43,15 +43,22 @@ public:
 	*/
 	virtual std::unique_ptr<Item> Clone() const = 0;
 
+	//! Equal operator
+	virtual bool operator==(const Item&) const = 0;
+	bool operator!=(const Item& other) const
+	{
+		return !operator==(other);
+	}
+
 	/*!
-	Move the item (translation on the plane).
+	Move the item (translation on the plane)
 	\param delta_x X component of translation
 	\param delta_y Y component of translation
 	*/
 	virtual void Move(double delta_x, double delta_y) = 0;
 
 	/*!
-	Move the item (translation on the plane).
+	Move the item (translation on the plane)
 	\param delta Translation
 	*/
 	virtual void Move(const Point& delta) = 0;

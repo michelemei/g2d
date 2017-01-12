@@ -23,6 +23,7 @@ E-Mail: michele.mei@gmail.com
 #define __osl_g2d_arc_h
 
 #include "Oriented.h"
+#include <vector>
 
 namespace osl {
 namespace g2d {
@@ -99,7 +100,7 @@ public:
 	\param other The arc with which to make comparison
 	\return True if the arcs are equals, otherwise false
 	*/
-	bool operator==(const Arc& other) const;
+	bool operator==(const Item& other) const override;
 
 	/*!
 	\brief Get the arc's center
@@ -124,6 +125,13 @@ public:
 	\return The arc's subtended angle
 	*/
 	double GetSubtendedAngle() const;
+
+	/*!
+	\brief Discretize the arc
+	\param chordal_tollerance Cordal tollerance
+	\return A vector of discretized points
+	*/
+	std::vector<Point> Discretize(double chordal_tollerance) const;
 
 	/* virtuals from Item.h */
 	virtual ~Arc();

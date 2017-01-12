@@ -36,8 +36,8 @@ intersecting.
 */
 class G2D_API Path : public Oriented
 {
-	//! List of oriented items
-	std::unique_ptr<std::vector<std::unique_ptr<Oriented>>> oriented_items;
+	struct PathAttributes;
+	PathAttributes* attributes;
 
 public:
 	/*!
@@ -45,15 +45,17 @@ public:
 	\param start_item First item
 	*/
 	explicit Path(std::unique_ptr<Oriented> start_item);
-	
+
 	/*!
 	Create a path from a vector of oriented items.
-	\param items First item
+	\param oriented_items First item
 	\param from Optional. Initial item, if 0 taken the first
 	\param to Optional. Final item, if 0 taken the the last
 	*/
 	explicit Path(std::vector<std::unique_ptr<Oriented>>& oriented_items,
 	              unsigned int from = 0, unsigned int to = 0);
+
+	bool operator==(const Item&) const override;
 
 	//! Check if path is close
 	/*!
@@ -61,6 +63,9 @@ public:
 	        Using \ref Point::operator==.
 	*/
 	bool IsClosed() const;
+
+	//! Check if items path are consecutive
+	static bool IsConsecutive(std::vector<std::unique_ptr<Oriented>>& items);
 
 	//! Get oriented item at the specified index
 	/*!

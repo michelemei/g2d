@@ -5,24 +5,53 @@
 using namespace std;
 using namespace osl::g2d;
 
-Shape::Shape(unique_ptr<Path> single)
+struct Shape::ShapeAttributes
 {
-	paths = unique_ptr<vector<unique_ptr<Path>>>(new vector<unique_ptr<Path>>());
-	paths->push_back(move(single));
+	unique_ptr<vector<unique_ptr<Path>>> paths;
+};
+
+Shape::Shape(unique_ptr<Path> single)
+	: attributes(new ShapeAttributes())
+{
+	attributes->paths = unique_ptr<vector<unique_ptr<Path>>>(new vector<unique_ptr<Path>>());
+	attributes->paths->push_back(move(single));
 }
 
 Shape::Shape(vector<unique_ptr<Path>>& _paths)
+	: attributes(new ShapeAttributes())
 {
-	paths = unique_ptr<vector<unique_ptr<Path>>>(new vector<unique_ptr<Path>>());
+	attributes->paths = unique_ptr<vector<unique_ptr<Path>>>(new vector<unique_ptr<Path>>());
 	for (auto p = _paths.begin(); p != _paths.end(); ++p)
 	{
-		paths->push_back(move(*p));
+		attributes->paths->push_back(move(*p));
 	}
+}
+
+bool Shape::operator==(const Item& other) const
+{
+	const Shape* other_shape = dynamic_cast<const Shape*>(&other);
+	if (other_shape == nullptr)
+		return false;
+
+	if (attributes->paths->size() != other_shape->attributes->paths->size())
+		return false;
+
+	for (unsigned int i = 0; i < attributes->paths->size(); ++i)
+	{
+		if (*attributes->paths->at(i) != *other_shape->attributes->paths->at(i))
+			return false;
+	}
+	return true;
 }
 
 const unique_ptr<vector<unique_ptr<Path>>>& Shape::GetPaths() const
 {
-	return paths;
+	return attributes->paths;
+}
+
+Shape::~Shape()
+{
+	delete attributes;
 }
 
 void Shape::Move(double /*delta_x*/, double /*delta_y*/)
@@ -35,7 +64,17 @@ void Shape::Move(const Point& /*delta*/)
 	throw exception("Not yet implemented");
 }
 
-std::unique_ptr<Item> Shape::Clone() const
+unique_ptr<Item> Shape::Clone() const
 {
-	throw exception("Not yet implemented");
+	vector<unique_ptr<Path>> paths_copy;
+	for (auto i = attributes->paths->begin(); i != attributes->paths->end(); ++i)
+	{
+		Item* clone = (*i)->Clone().release();
+		Path* path_copy = dynamic_cast<Path*>(clone);
+		if (path_copy != nullptr)
+		{
+			paths_copy.push_back(move(unique_ptr<Path>(path_copy)));
+		}
+	}
+	return unique_ptr<Shape>(new Shape(paths_copy));
 }

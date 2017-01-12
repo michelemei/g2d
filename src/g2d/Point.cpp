@@ -15,7 +15,7 @@ Point::Point(const Point& copy)
 {
 }
 
-const Point& Point::operator=(const Point& other)
+Point& Point::operator=(const Point& other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -56,6 +56,16 @@ Point& Point::operator*=(double value)
 	X *= value;
 	Y *= value;
 	return *this;
+}
+
+void Point::Rotate(const Point& center, double radians)
+{
+	double _cos = cos(radians);
+	double _sin = sin(radians);
+	double new_x = (X - center.X) * _cos - (Y - center.Y) * _sin + center.X;
+	double new_y = (X - center.X) * _sin + (Y - center.Y) * _cos + center.Y;
+	X = new_x;
+	Y = new_y;
 }
 
 double Point::Distance(const Point& other) const

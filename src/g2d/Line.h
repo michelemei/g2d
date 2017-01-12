@@ -43,23 +43,17 @@ public:
 	*/
 	Line(const Point& start_point, const Point& end_point);
 
-	//! Equals operator
-	/*!
-	Two lines are equals when they have the same:
-	- start point (\ref Point::operator==)
-	- end point
-	*/
-	bool operator==(const Line&) const;
+	bool operator==(const Item& other) const override;
 
-	/* from Items.h */
+	/* Items.h */
 	virtual ~Line();
-	virtual void Move(double delta_x, double delta_y) override;
-	virtual void Move(const Point& delta) override;
+	void Move(double delta_x, double delta_y) override;
+	void Move(const Point& delta) override;
 
-	/* from Oriented.h */
-	virtual const Point& GetEndPoint() const override;
-	virtual std::unique_ptr<Item> Clone() const override;
-	virtual void Reverse() override;
+	/* Oriented.h */
+	const Point& GetEndPoint() const override;
+	std::unique_ptr<Item> Clone() const override;
+	void Reverse() override;
 };
 
 }

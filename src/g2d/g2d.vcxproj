@@ -48,12 +48,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;G2D_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;G2D_EXPORTS;ENABLE_TEST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PostBuildEvent>
+      <Command>$(OutputPath)oslut.exe $(OutputPath)g2d.dll $(OutputPath)g2d.xml</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -74,8 +77,10 @@
   <ItemGroup>
     <ClInclude Include="Arc.h" />
     <ClInclude Include="dbl.h" />
+    <ClInclude Include="DxfReader.h" />
     <ClInclude Include="DxfWriter.h" />
     <ClInclude Include="g2d_enum.h" />
+    <ClInclude Include="g2d_exception.h" />
     <ClInclude Include="g2d_exports.h" />
     <ClInclude Include="g2d_math.h" />
     <ClInclude Include="g2d_precision.h" />
@@ -84,12 +89,14 @@
     <ClInclude Include="Oriented.h" />
     <ClInclude Include="Path.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="shape.h" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Arc.cpp" />
+    <ClCompile Include="DxfReader.cpp" />
     <ClCompile Include="DxfWriter.cpp" />
+    <ClCompile Include="g2d_exception.cpp" />
     <ClCompile Include="g2d_math.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="Oriented.cpp" />
@@ -100,6 +107,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
